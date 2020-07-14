@@ -1,0 +1,7 @@
+/target/
+/bin/
+.classpath
+*/*.png
+/test-output/
+/TestResult/
+
