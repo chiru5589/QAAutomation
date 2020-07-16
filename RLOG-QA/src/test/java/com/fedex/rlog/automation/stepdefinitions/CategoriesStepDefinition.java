@@ -1,6 +1,8 @@
 package com.fedex.rlog.automation.stepdefinitions;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.openqa.selenium.WebDriver;
@@ -25,10 +27,13 @@ public class CategoriesStepDefinition {
 
 	
 	WebDriver driver;
-	//private static Map<String, String> CategoryID = new HashMap<>();
+		private static Map<String, String> CategoryID = new HashMap<>();
 		
 		String CatID;
 		String CatName;
+		String Query;
+		String Expected;
+		String Actual;
 		private static String randomizedCatID;
 		BaseRlogLoginPageObject baseCommerceLoginPageObject = new BaseRlogLoginPageObject();
 		CategoriesPageObject categoriesPageObject=new CategoriesPageObject();
@@ -53,7 +58,7 @@ public class CategoriesStepDefinition {
 			return foo.nextInt((max + 1) - min) + min;
 		}
 		
-	/*	public static String setCategoryID(String CatID) {
+		public static String setCategoryID(String CatID) {
 	        String randomizedCatID = CatID + generateRandomNumber(1111, 9999);
 	        CategoryID.put(CatID, randomizedCatID);
 	        return randomizedCatID;
@@ -61,16 +66,20 @@ public class CategoriesStepDefinition {
 		public static String getCategoryID(String CatID) {
 	        String randomizedCatID = CategoryID.get(CatID);
 	        return randomizedCatID;
-		}*/
-		
-		public static String setCategoryID(String CatID) {
-			return CategoriesStepDefinition.randomizedCatID=CatID + generateRandomNumber(1111, 9999);
 		}
 		
-		public static String getCategoryID() {
-	        return randomizedCatID;
+		
+		@Given("^User is on the home page$")
+		public void user_is_on_the_home_page() throws Throwable {
+			
+			baseCommerceLoginPageObject.open(Config.getProperty("rlog_url"));
+		    
 		}
 		
+		@When("^user clicks on categories page$")
+		public void user_clicks_on_categories_page() throws Throwable {
+		    SeleniumTestHelper.clickOnButton(categoriesPageObject.CategoriesMenu);
+		}
 		
 		@Then("^user validates all the expected fields in the screen$")
 		public void user_validates_all_the_expected_fields_in_the_screen() throws Throwable {
@@ -81,7 +90,7 @@ public class CategoriesStepDefinition {
 			SeleniumTestHelper.assertTrue(categoriesPageObject.selectcatName.isDisplayed(),"Category Name Dropdown "
 					+ "is displayed");
 			
-			SeleniumTestHelper.assertTrue(categoriesPageObject.searchBtn.isDisplayed(),"Search Button is displayed");
+			SeleniumTestHelper.assertTrue(categoriesPageObject.SearchButton.isDisplayed(),"Search Button is displayed");
 			
 			SeleniumTestHelper.assertTrue(categoriesPageObject.resetBtn.isDisplayed(),"Reset Button is displayed");
 			
@@ -110,34 +119,21 @@ public class CategoriesStepDefinition {
 		@When("^user creates a new category with id as \"([^\"]*)\" and name as \"([^\"]*)\"$")
 		public void user_creates_a_new_category_with_id_as_and_name_as(String id, String name) throws Throwable {
 		    
-			//CatID=CategoryStepDefination.setCategoryID(id);
-			String catId=CategoriesStepDefinition.setCategoryID(id);
+			CatID=CategoriesStepDefinition.setCategoryID(id);
+						
+			SeleniumTestHelper.enterTextInTextBox(categoriesPageObject.CatIDinput,CatID);
 			
-			//SeleniumTestHelper.enterTextInTextBox(categoryPageObject.catIdBox,CatID);
-			SeleniumTestHelper.enterTextInTextBox(categoriesPageObject.catIdBox,catId);   //newly added
+			SeleniumTestHelper.reportLog("Category ID :"+CatID);
 			
-			//String randomizedCatName = name + generateRandomNumber(1111, 9999);
+			String randomizedCatName = name + generateRandomNumber(1111, 9999);
 			
-			SeleniumTestHelper.enterTextInTextBox(categoriesPageObject.catName,name);
+			SeleniumTestHelper.enterTextInTextBox(categoriesPageObject.CatNameinput,randomizedCatName);
 			
-			SeleniumTestHelper.clickOnButton(categoriesPageObject.addCat);
+			SeleniumTestHelper.clickOnButton(categoriesPageObject.SaveCat);
 			
 		}
 		
-		@Given("^User is on the home page$")
-		public void user_is_on_the_home_page() throws Throwable {
-			
-			baseCommerceLoginPageObject.open(Config.getProperty("rlog_url"));
-		    
-		}
 		
-		/*@Given("^User is on the Category page$")
-		public void user_is_on_the_Category_page() throws Throwable {
-			BaseCommerceLoginPageObject baseCommerceLoginPageObject = new BaseCommerceLoginPageObject();
-	    	Thread.sleep(5000);
-	    	baseCommerceLoginPageObject.categoryPage();
-	    	Thread.sleep(5000);
-		}*/
 
 		@When("^User clicks on add new button$")
 		public void user_clicks_on_add_new_button() throws Throwable {
@@ -182,8 +178,10 @@ public class CategoriesStepDefinition {
 
 		@When("^enters a cat amount as (\\d+)$")
 		public void enters_a_cat_amount_as(int amount) throws Throwable {
-			categoriesPageObject.AmountCat.clear();
-			categoriesPageObject.AmountCat.sendKeys(String.valueOf(amount));
+			//categoriesPageObject.AmountCat.clear();
+			//categoriesPageObject.AmountCat.sendKeys(String.valueOf(amount));
+			
+			SeleniumTestHelper.enterTextInTextBox(categoriesPageObject.AmountCat, String.valueOf(amount));
 		}
 
 
@@ -192,9 +190,9 @@ public class CategoriesStepDefinition {
 		   
 		}
 		
-		@When("^user clicks on Add button$")
-		public void user_clicks_on_Add_button() throws Throwable {
-			categoriesPageObject.addCat.click();
+		@When("^user clicks on save cat button$")
+		public void user_clicks_on_save_cat_button() throws Throwable {
+			categoriesPageObject.SaveCat.click();
 		}
 
 
@@ -216,11 +214,11 @@ public class CategoriesStepDefinition {
 		public void user_selects_and_clicks_on_search_button(String categoryId) throws Throwable {
 			//String catId=String.valueOf(CategoryStepDefination.getCategoryID(categoryId));
 			//String catId=categoryId;
-			String CAT_ID=CategoriesStepDefinition.getCategoryID();
+			//String CAT_ID=CategoriesStepDefinition.getCategoryID();
 			Thread.sleep(5000);
-			categoriesPageObject.selectcatId.sendKeys(CAT_ID);
+			//categoriesPageObject.selectcatId.sendKeys(CAT_ID);
 			//Thread.sleep(2000);
-			categoriesPageObject.searchBtn.click();
+			//categoriesPageObject.searchBtn.click();
 		}
 		
 		@Then("^user verifies the edited record in the database \"([^\"]*)\",\"([^\"]*)\",(\\d+),(\\d+),(\\d+),(\\d+)$")
@@ -228,7 +226,7 @@ public class CategoriesStepDefinition {
 			
 			//String CAT_ID=categryId;
 			//String CAT_ID=CategoryStepDefination.getCategoryID(categryId);
-			String CAT_ID=CategoriesStepDefinition.getCategoryID();
+			/*String CAT_ID=CategoriesStepDefinition.getCategoryID();
 			String ActualcatNameVal=catName;
 			String ActualcatQntyVal=String.valueOf(catQty);
 			String ActualCatNoOfPalletsVal=String.valueOf(catNoPallets);
@@ -259,34 +257,24 @@ public class CategoriesStepDefinition {
 			   String query4="select CAT_AMOUNT from CATEGORIES where CAT_ID='"+CAT_ID+"'";
 			   String CatAmtColVal=DataBaseUtil.getFirstRowDataWithColumnName(query4, "CAT_AMOUNT");
 			   System.out.println("CatAmtColVal is "+CatAmtColVal);
-			   SeleniumTestHelper.assertEquals(ActualCatAmtVal, CatAmtColVal, "category Amount has been updated ");
+			   SeleniumTestHelper.assertEquals(ActualCatAmtVal, CatAmtColVal, "category Amount has been updated ");*/
 			   
 		}
 		
 		@When("^User clicks on Edit button$")
 		public void user_clicks_on_Edit_button() throws Throwable {
-			Thread.sleep(2000);
+			
 		   SeleniumTestHelper.click(categoriesPageObject.editBtn);
 		}
 
 		@Then("^user verifies the newly added record in the database \"([^\"]*)\"$")
-		public void user_verifies_the_newly_added_record_in_the_database(String categryId) throws Throwable {
-			//String CAT_ID=CategoryStepDefination.getCategoryID(categryId);
-			String CAT_ID=CategoriesStepDefinition.getCategoryID();
-			System.out.println("CAT_ID is "+CAT_ID);
-			   String query="select * from CATEGORIES where CAT_ID='"+CAT_ID+"'";
-			   List<String> noOfCatId=DataBaseUtil.getColumnData(query, "CAT_ID");
-			   //List<String> CatId =DataBaseUtil.getRowsDataWithColumnName(query, CAT_ID);
-			   int noOfRecords=noOfCatId.size();
-			   System.out.println("no of record found are"+noOfRecords);
-			   if(noOfRecords==1)
-			   {
-				   SeleniumTestHelper.assertTrue(true, "Record entered sucessfully");
-			   }
-			   else
-			   {
-				   SeleniumTestHelper.fail("record not found in the DB");
-			   }
+		public void user_verifies_the_newly_added_record_in_the_database(String categoryId) throws Throwable {
+			Query="select * from categories where cat_cus_id='NIKE' and cat_id='"+CategoriesStepDefinition.getCategoryID(categoryId)+"'";
+			
+			
+			SeleniumTestHelper.assertTrue(DataBaseUtil.isRecordExisting(Query),"Record has been created with new Category ID");
+			
+			
 		}
 		
 		@When("^enters cat name as\"([^\"]*)\"$")
@@ -304,40 +292,32 @@ public class CategoriesStepDefinition {
 		
 		@When("^user clicks on delete button$")
 		public void user_clicks_on_delete_button() throws Throwable {
-			categoriesPageObject.deleteBtn.click();
-		    Thread.sleep(3000);
+			/*categoriesPageObject.deleteBtn.click();
+		    Thread.sleep(3000);*/
+			
+			SeleniumTestHelper.clickOnButton(categoriesPageObject.deleteBtn);
+			
 		}
 		
 		@When("^user verifies that Deleted message is  displayed$")
 		public void user_verifies_that_Deleted_message_is_displayed() throws Throwable {
 			 String ExpectedMsg="Successfully deleted";
-			   Thread.sleep(3000);
+			   
 			   String ActualMsg=categoriesPageObject.deleteMsg.getText();
 			   
-			   if(categoriesPageObject.deleteMsg.isDisplayed())
-			   {
+			   
 				   SeleniumTestHelper.assertEquals(ActualMsg, ExpectedMsg);
-			   }
-			   else
-			   {
-				   SeleniumTestHelper.fail("The delete message failed to display");
-			   }
+			   
 		}
 		
 		@Then("^user verifies that success message is  displayed$")
 		public void user_verifies_that_success_message_is_displayed() throws Throwable {
 		   String ExpectedMsg="Successfully Saved";
-		   Thread.sleep(3000);
-		   String ActualMsg=categoriesPageObject.SucessMsg.getText();
+		
+		   String ActualMsg=categoriesPageObject.SucessMsg.getText();	
 		   
-		   if(categoriesPageObject.SucessMsg.isDisplayed())
-		   {
-			   SeleniumTestHelper.assertEquals(ActualMsg, ExpectedMsg);
-		   }
-		   else
-		   {
-			   SeleniumTestHelper.fail("The suceess message failed to display");
-		   }
+		   SeleniumTestHelper.assertEquals(ActualMsg, ExpectedMsg);
+		   
 		}
 		@Then("^user verifies that the record has been deleted from the database \"([^\"]*)\"$")
 		public void user_verifies_that_the_record_has_been_deleted_from_the_database(String categoryId) throws Throwable {
@@ -345,7 +325,7 @@ public class CategoriesStepDefinition {
 			//String CAT_ID=String.valueOf(CategoryStepDefination.getCategoryID(categoryId));
 			//String CAT_IDNew=CategoryID.get(categoryId);
 			//System.out.println("CAT_IDNew is "+CAT_IDNew);
-			String CAT_ID=CategoriesStepDefinition.getCategoryID();
+			/*String CAT_ID=CategoriesStepDefinition.getCategoryID();
 			System.out.println("CAT_ID is "+CAT_ID);
 			   String query="select * from CATEGORIES where CAT_ID='"+CAT_ID+"'";
 			   List<String> noOfCatId=DataBaseUtil.getColumnData(query, "CAT_ID");
@@ -359,7 +339,14 @@ public class CategoriesStepDefinition {
 			   else
 			   {
 				   SeleniumTestHelper.fail("record found in the DB");
-			   }
+			   }*/
+			
+			Query="select * from categories where cat_cus_id='NIKE' and cat_id='"+CategoriesStepDefinition.getCategoryID(categoryId)+"'";
+			
+			
+			SeleniumTestHelper.assertFalse(DataBaseUtil.isRecordExisting(Query),"Record has been deleted");
+			
+			
 		}
 		
 		@When("^user clicks on Reset button$")
@@ -386,14 +373,53 @@ public class CategoriesStepDefinition {
 			Thread.sleep(5000);
 			String catId=categoryId;
 			categoriesPageObject.selectcatId.sendKeys(catId);
-			categoriesPageObject.searchBtn.click();
+			//categoriesPageObject.searchBtn.click();
 		}
 
 		@When("^user clicks confirms to delete$")
 		public void user_clicks_confirms_to_delete() throws Throwable {
-			Thread.sleep(2000);
+			/*Thread.sleep(2000);
 			categoriesPageObject.ConfirmPopUp.click();
-			//Thread.sleep(5000);
+			Thread.sleep(5000);*/
+			
+			SeleniumTestHelper.clickOnButton(categoriesPageObject.ConfirmPopUp);
 		}
+		
+		@When("^user selects created \"([^\"]*)\" from category id dropdown$")
+		public void user_selects_created_from_category_id_dropdown(String catid) throws Throwable {
+		 
+		//CatID=CategoriesStepDefinition.getCategoryID(catid);
+		
+		SeleniumTestHelper.clickOnButton(categoriesPageObject.selectcatId);
+		
+		SeleniumTestHelper.dropDownPartialItem(CategoriesStepDefinition.getCategoryID(catid)).click();
+					
+		}
+		
+		@When("^user clicks on Search button$")
+		public void user_clicks_on_Search_button() throws Throwable {
+		    
+			SeleniumTestHelper.clickOnButton(categoriesPageObject.SearchButton);
+			
+		}
+		
+		
+		@Then("^user verifies the category id \"([^\"]*)\" and updated \"([^\"]*)\" (\\d+) in database$")
+		public void user_verifies_the_category_id_and_updated_in_database(String categoryId, String fieldname, int fieldvalue) throws Throwable {
+			Query="select * from categories where cat_cus_id='NIKE' and cat_id='"+CategoriesStepDefinition.getCategoryID(categoryId)+"'";
+			
+			Actual=String.valueOf(fieldvalue);
+			Expected=DataBaseUtil.getFirstRowDataWithColumnName(Query,fieldname);
+			
+			SeleniumTestHelper.assertEquals(Actual, Expected, "Record has been updated");
+		}
+		
+		@Then("^user verifies that data has been cleared$")
+		public void user_verifies_that_data_has_been_cleared() throws Throwable {
+
+			SeleniumTestHelper.assertFalse(false,"Data has been Cleared");
+			
+		}
+
 
 }

@@ -354,7 +354,9 @@ public class SeleniumTestHelper {
 	}
 	
 	public static WebElement dropDownPartialItem(String partialItemName){
-		return Driver.getInstance().findElement(By.xpath(""));
+		//return Driver.getInstance().findElement(By.xpath("//option[@ng-reflect-value='"+partialItemName+"')]"));
+		
+		return Driver.getInstance().findElement(By.xpath("//option[contains(text(),'"+partialItemName+"')]"));
 	}
 	
 	public static WebElement dropDownItem(String itemName){

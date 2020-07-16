@@ -26,7 +26,7 @@ import cucumber.api.testng.AbstractTestNGCucumberTests;
 		glue={"com.fedex.rlog.automation.stepdefinitions"},
 		
 
-		tags={"@Categories_Validating_the_fields_present_in_display_page"},
+		tags={"@Categories_e2e"},
 
 		
 		dryRun = false

@@ -28,11 +28,11 @@ public class CategoriesPageObject {
 	
 	//Button
 	
+	@FindBy(linkText="Categories")
+	public WebElement CategoriesMenu;
+	
 	@FindBy(css="button.btn-search")
 	public WebElement SearchButton;
-	
-	@FindBy(css="button.btn-reset")
-	public WebElement ResetButton;
 	
 	@FindBy(css="button.btn-add")
 	public WebElement AddNewButton;
@@ -97,22 +97,25 @@ public class CategoriesPageObject {
 	@FindBy(xpath="//input[@ng-reflect-name='catExpirationDate']")
 	public WebElement ExpiratinDate;
 	
-	@FindBy(xpath="//input[@placeholder='Enter Cat Id']")
+	//@FindBy(xpath="//input[@placeholder='Enter Cat Id']")
+	@FindBy(xpath="//input[@ng-reflect-name='catId']")
 	public WebElement catIdBox;
 	
 	@FindBy(xpath="//td[@class='fxg_table_action']/child::*[1]")
-	public WebElement addCat;
+	public WebElement SaveCat;
 	
 	@FindBy(xpath="//td[@class='fxg_table_action']/child::*[2]")
 	public WebElement cancelCat;
 	
-	@FindBy(xpath="//button[contains(text(),' NEW ')]")
+	@FindBy(xpath="//button[contains(text(),'ADD NEW')]")
 	public WebElement newBtn;
 	
-	@FindBy(xpath="//td[@class='fxg_table_action']/child::*[1]")
+  //@FindBy(xpath="//td[@class='fxg_table_action']/child::*[1]")
+	@FindBy(xpath="//td[contains(@class,'fxg_table_action')]/child::*[1]")
 	public WebElement editBtn;
 	
-	@FindBy(xpath="//td[@class='fxg_table_action']/child::*[2]")
+	//@FindBy(xpath="//td[@class='fxg_table_action']/child::*[2]")
+	@FindBy(xpath="//td[contains(@class,'fxg_table_action')]/child::*[2]")
 	public WebElement deleteBtn;
 	
 	@FindBy(xpath="//div[contains(text(),'Successfully updated')]")
@@ -130,18 +133,19 @@ public class CategoriesPageObject {
 	@FindBy(xpath="//tr[@class='ng-star-inserted']")
 	public WebElement ColumnFound;	
 	
-	@FindBy(xpath="//button[contains(text(),' RESET ')]")
+	@FindBy(xpath="//button[contains(text(),'RESET')]")
 	public WebElement resetBtn;
 	
-	@FindBy(xpath="//select[contains(@class,'dropdow')][1]")
+	@FindBy(xpath="//*[contains(text(),'Select Category Id')]/..")
 	public WebElement selectcatId;
 	
-	@FindBy(xpath="//select[contains(@class,'dropdow')][2]")
+	@FindBy(xpath="//*[contains(text(),'Select Category Name')]/..")
 	public WebElement selectcatName;
 	
-	@FindBy(xpath="//button[contains(text(),'SEARCH ')]")
-	public WebElement searchBtn;
+	/*@FindBy(xpath="//button[contains(text(),'SEARCH')]")
+	public WebElement searchBtn;*/
 	
-	@FindBy(xpath="//button[contains(text(),'OK')]")
+	//@FindBy(xpath="//button[contains(text(),'OK')]")
+	@FindBy(css="button.btn-success")
 	public WebElement ConfirmPopUp;
 }
