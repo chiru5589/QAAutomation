@@ -27,14 +27,15 @@ public class CategoriesStepDefinition {
 
 	
 	WebDriver driver;
-		private static Map<String, String> CategoryID = new HashMap<>();
+		public static Map<String, String> CategoryID = new HashMap<>();
+		public static Map<String, String> DepatmentID = new HashMap<>();
 		
 		String CatID;
 		String CatName;
 		String Query;
 		String Expected;
 		String Actual;
-		private static String randomizedCatID;
+		public static String randomizedCatID;
 		BaseRlogLoginPageObject baseCommerceLoginPageObject = new BaseRlogLoginPageObject();
 		CategoriesPageObject categoriesPageObject=new CategoriesPageObject();
 		DataBaseUtil dataBaseUtil=new DataBaseUtil();
@@ -59,12 +60,12 @@ public class CategoriesStepDefinition {
 		}
 		
 		public static String setCategoryID(String CatID) {
-	        String randomizedCatID = CatID + generateRandomNumber(1111, 9999);
+	        randomizedCatID = CatID + generateRandomNumber(1111, 9999);
 	        CategoryID.put(CatID, randomizedCatID);
 	        return randomizedCatID;
 		}
 		public static String getCategoryID(String CatID) {
-	        String randomizedCatID = CategoryID.get(CatID);
+	        randomizedCatID = CategoryID.get(CatID);
 	        return randomizedCatID;
 		}
 		
