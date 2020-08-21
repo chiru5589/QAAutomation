@@ -1,11 +1,15 @@
 package com.fedex.rlog.automation.stepdefinitions;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import com.fedex.rlog.automation.pages.Maintenance.CategoriesPageObject;
 import com.fedex.rlog.automation.pages.commons.BaseRlogLoginPageObject;
@@ -29,7 +33,7 @@ public class CategoriesStepDefinition {
 	WebDriver driver;
 		public static Map<String, String> CategoryID = new HashMap<>();
 		public static Map<String, String> DepatmentID = new HashMap<>();
-		
+
 		String CatID;
 		String CatName;
 		String Query;
@@ -70,12 +74,7 @@ public class CategoriesStepDefinition {
 		}
 		
 		
-		@Given("^User is on the home page$")
-		public void user_is_on_the_home_page() throws Throwable {
-			
-			baseCommerceLoginPageObject.open(Config.getProperty("rlog_url"));
-		    
-		}
+		
 		
 		@When("^user clicks on categories page$")
 		public void user_clicks_on_categories_page() throws Throwable {
@@ -421,6 +420,16 @@ public class CategoriesStepDefinition {
 			SeleniumTestHelper.assertFalse(false,"Data has been Cleared");
 			
 		}
+		
+		
+		
 
-
+		
+		
+		
+		
+		
+		
+		
+		
 }

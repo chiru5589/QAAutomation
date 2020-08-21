@@ -88,3 +88,5 @@ Feature: Categories Test Scenarios
     Examples: 
       | CatID | CatName | Amount | Amount_field |
       | num   | Rlog    |     18 | CAT_AMOUNT   |
+
+ 

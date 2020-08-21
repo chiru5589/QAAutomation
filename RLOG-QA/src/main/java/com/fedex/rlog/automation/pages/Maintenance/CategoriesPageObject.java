@@ -1,5 +1,6 @@
 package com.fedex.rlog.automation.pages.Maintenance;
 
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,6 +17,8 @@ public class CategoriesPageObject {
 		this.driver=Driver.getInstance();
 		PageFactory.initElements(driver, this);
 	}
+	
+
 	
 	
 	//DropDown
@@ -148,4 +151,13 @@ public class CategoriesPageObject {
 	//@FindBy(xpath="//button[contains(text(),'OK')]")
 	@FindBy(css="button.btn-success")
 	public WebElement ConfirmPopUp;
+	
+
+	
+	
+	
+	
+	
+	
+
 }

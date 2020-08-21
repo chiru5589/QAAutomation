@@ -34,9 +34,10 @@ import org.testng.Reporter;
 public class SeleniumTestHelper {
 	
 	static WebDriver driver = Driver.getInstance();
-
+	public static String Text;
+	
 	public static void clickOnButton(WebElement element) {
-		try {
+		try {			
 			if (element.isDisplayed()) {
 				element.click();
 			}
@@ -44,6 +45,21 @@ public class SeleniumTestHelper {
 			Assert.fail(exe.getMessage() + " exception occured.");
 		}
 
+	}
+	
+	public static String getText(WebElement element) {
+		try {
+			WebDriverWait wait = new WebDriverWait(driver,30);
+			wait.until(ExpectedConditions.visibilityOf(element));
+		
+			if (element.isDisplayed()) {
+				Text=element.getText().trim();
+			}
+		} catch (NoSuchElementException exe) {
+			Assert.fail(exe.getMessage() + " exception occured.");
+		}
+		
+		return Text;
 	}
 
 	public static void enterTextInTextBox(WebElement element, String text) {
