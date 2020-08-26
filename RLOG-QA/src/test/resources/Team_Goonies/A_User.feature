@@ -1,14 +1,16 @@
 @User_Screen_Feature
 Feature: User Test Scenarios
 
-  @User_Search_UserData
+Background: User is on the home page
+
+  @User_Search_UserData @Test_Regression_User
   Scenario Outline: User searchers for particular user id and verifies the user data in the database
     Given User is on the home page
     When user clicks on Administration
-    And user click on user screen
-    When user enters userid as "<userid>"
-    And user clicks on search button
-    Then user verifies all the details of the user "<userid>" in database
+    * user click on user screen
+    * user enters userid as "<userid>"
+    * user clicks on search button
+    Then user verifies all the details of the user "<userid>" in database   
 
     Examples: 
       | userid |
@@ -73,9 +75,3 @@ Feature: User Test Scenarios
     Examples: 
       | Invalid | Special_char | Blind_Search                              | Invalid_Search   | Valid_user_search                    |
       | Invalid | System%      | Please enter at least one search criteria | No records found | Please enter valid User ID/User Name |
-
-    
-    
-    
-    
-       

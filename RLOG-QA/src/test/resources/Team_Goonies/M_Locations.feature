@@ -1,0 +1,2 @@
+@Locations_Screen_Feature
+Feature: Locations Test Scenarios

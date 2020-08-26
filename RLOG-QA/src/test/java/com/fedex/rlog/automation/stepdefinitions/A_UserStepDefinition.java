@@ -1,11 +1,6 @@
 package com.fedex.rlog.automation.stepdefinitions;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,9 +11,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fedex.rlog.automation.pages.Administration.UserPageObject;
 import com.fedex.rlog.automation.pages.commons.BaseRlogLoginPageObject;
 import com.fedex.rlog.automation.utils.Config;
@@ -35,7 +27,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 
-public class A_UserStepDefinition {
+public class A_UserStepDefinition extends CommonStepDefinition {
 
 	WebDriver driver;
 	String Query;
@@ -60,7 +52,7 @@ public class A_UserStepDefinition {
 
 	@Before
 	public void intiate(Scenario scenario) {
-
+			
 	}
 
 	@After
@@ -261,7 +253,7 @@ public class A_UserStepDefinition {
 				 SeleniumTestHelper.assertEquals(Expected, Actual, "Warehouse matches");
 	}
 	
-	
+
 
 	
 }
